@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Web App</title>
+    <script>
+        async function sendInput() {
+            const userInput = document.getElementById('userInput').value;
+            try {
+                const response = await fetch('http://localhost:3000/api/respond', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ input: userInput })
+                });
+                const data = await response.json();
+                document.getElementById('response').innerText = data.response;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('response').innerText = 'Error loading data';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>API Web App</h1>
+    <input type="text" id="userInput" placeholder="Enter 'hello'">
+    <button onclick="sendInput()">Send</button>
+    <p id="response">Waiting for input...</p>
+</body>
+</html>
